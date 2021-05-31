@@ -25,7 +25,10 @@ import { UserPopover } from "components/user-popover";
  */
 
 // prop drilling
-
+/**
+ * 登录状态下的app以及非登录状态下的app（unauthenticated-app）分开来写。
+ * @constructor
+ */
 export default function AuthenticatedApp() {
   return (
     <Container>
@@ -42,6 +45,10 @@ export default function AuthenticatedApp() {
   );
 }
 
+/**
+ * 页头
+ * @constructor
+ */
 const PageHeader = () => {
   return (
     <Header between={true}>
@@ -59,6 +66,10 @@ const PageHeader = () => {
   );
 };
 
+/**
+ * 右侧的用户信息
+ * @constructor
+ */
 const User = () => {
   const { logout, user } = useAuth();
   return (
@@ -67,7 +78,7 @@ const User = () => {
         <Menu>
           <Menu.Item key={"logout"}>
             <Button onClick={logout} type={"link"}>
-              登出
+              退出
             </Button>
           </Menu.Item>
         </Menu>

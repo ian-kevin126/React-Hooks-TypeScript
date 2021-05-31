@@ -9,6 +9,10 @@ import right from "assets/right.svg";
 import { useDocumentTitle } from "utils";
 import { ErrorBox } from "components/lib";
 
+/**
+ * 非登录状态下的app
+ * @constructor
+ */
 export default function UnauthenticatedApp() {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null);
