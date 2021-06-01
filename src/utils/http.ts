@@ -71,7 +71,7 @@ export const http = async (
 // return (...[endpoint, config]: Parameters<typeof http>) =>
 
 /**
- * 封装一个自动携带jwt的token的接口请求hook
+ * 封装一个自动携带jwt的token的接口请求hook——useHttp，用来管理JWT和登录状态
  */
 export const useHttp = () => {
   const { user } = useAuth();
