@@ -4,15 +4,17 @@ import { useMountedRef } from "utils";
 interface State<D> {
   error: Error | null;
   data: D | null;
-  stat: "idle" | "loading" | "error" | "success";
+  stat: "idle" | "loading" | "error" | "success"; // idle异步未发生，loading正在发生，error出现错误，success成功
 }
 
+// 默认初始状态
 const defaultInitialState: State<null> = {
   stat: "idle",
   data: null,
   error: null,
 };
 
+// 配置抛出异常的方式，默认抛出和默认不抛出
 const defaultConfig = {
   throwOnError: false,
 };

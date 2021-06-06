@@ -6,7 +6,7 @@ import {
   useEditConfig,
 } from "utils/use-optimistic-options";
 import { Project } from "types/project";
-import { cleanObject } from "utils/index";
+import { cleanObject } from "utils";
 
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp();

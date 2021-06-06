@@ -14,15 +14,11 @@ export const Row = styled.div<{
   margin-bottom: ${(props) => props.marginBottom + "rem"};
 
   > * {
-    margin-top: 0 !important;
+    margin-top: 0 !important; // 重置上下外边距，以免影响垂直居中效果
     margin-bottom: 0 !important;
     margin-right: ${(props) =>
-      typeof props.gap === "number"
-        ? props.gap + "rem"
-        : props.gap
-        ? "2rem"
-        : undefined};
-  }
+  typeof props.gap === "number" ? props.gap + "rem" : props.gap ? "2rem" : undefined
+};}
 `;
 
 const FullPage = styled.div`
@@ -34,14 +30,14 @@ const FullPage = styled.div`
 
 export const FullPageLoading = () => (
   <FullPage>
-    <Spin size={"large"} />
+    <Spin size={"large"}/>
   </FullPage>
 );
 
 export const FullPageErrorFallback = ({ error }: { error: Error | null }) => (
   <FullPage>
-    <DevTools />
-    <ErrorBox error={error} />
+    <DevTools/>
+    <ErrorBox error={error}/>
   </FullPage>
 );
 

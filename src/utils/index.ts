@@ -121,7 +121,7 @@ export const resetRoute = () => (window.location.href = window.location.origin);
 export const subset = <
   O extends { [key in string]: unknown },
   K extends keyof O
->(
+  >(
   obj: O,
   keys: K[]
 ) => {
