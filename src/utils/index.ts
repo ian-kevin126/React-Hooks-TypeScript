@@ -88,10 +88,15 @@ export const useArray = <T>(initialArray: T[]) => {
       const copy = [...value];
       copy.splice(index, 1);
       setValue(copy);
-    },
+    }
   };
 };
 
+/**
+ * 页面头部标题hook
+ * @param title
+ * @param keepOnUnmount   true：页面卸载时保留住title
+ */
 export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
   const oldTitle = useRef(document.title).current;
   // 页面加载时: 旧title
@@ -118,10 +123,8 @@ export const resetRoute = () => (window.location.href = window.location.origin);
  * @param obj
  * @param keys
  */
-export const subset = <
-  O extends { [key in string]: unknown },
-  K extends keyof O
-  >(
+export const subset = <O extends { [key in string]: unknown },
+  K extends keyof O>(
   obj: O,
   keys: K[]
 ) => {
