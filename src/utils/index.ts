@@ -109,7 +109,7 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
   useEffect(() => {
     return () => {
       if (!keepOnUnmount) {
-        // 如果不指定依赖，读到的就是旧title
+        // 根据闭包，如果不指定依赖，读到的就是旧title，这里我们就利用了闭包的特性
         document.title = oldTitle;
       }
     };
