@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth } from "context/auth-context";
 import { Form, Input } from "antd";
-import { LongButton } from "unauthenticated-app/index";
+import { LongButton } from "unauthenticated-app";
 import { useAsync } from "utils/use-async";
 
 // interface Base {

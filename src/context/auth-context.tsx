@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useCallback } from "react";
 import * as auth from "auth-provider";
 import { http } from "utils/http";
 import { useMount } from "utils";
@@ -24,15 +24,16 @@ const bootstrapUser = async () => {
   return user;
 };
 
-const AuthContext = React.createContext<
-  | {
-      user: User | null;
-      register: (form: AuthForm) => Promise<void>;
-      login: (form: AuthForm) => Promise<void>;
-      logout: () => Promise<void>;
-    }
-  | undefined
->(undefined);
+const AuthContext =
+  React.createContext<
+    | {
+        user: User | null;
+        register: (form: AuthForm) => Promise<void>;
+        login: (form: AuthForm) => Promise<void>;
+        logout: () => Promise<void>;
+      }
+    | undefined
+  >(undefined);
 AuthContext.displayName = "AuthContext";
 
 // 登录鉴权的Provider
@@ -57,11 +58,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       queryClient.clear();
     });
 
-  useMount(() => {
-    // 页面刷新的时候，先从本地缓存中查询是否有token
-    // 解决登录以后，页面刷新后，user被重置为null导致的退出问题
-    run(bootstrapUser());
-  });
+  useMount(
+    useCallback(() => {
+      // 页面刷新的时候，先从本地缓存中查询是否有token
+      // 解决登录以后，页面刷新后，user被重置为null导致的退出问题
+      run(bootstrapUser());
+    }, [])
+  );
 
   if (isIdle || isLoading) {
     return <FullPageLoading />;

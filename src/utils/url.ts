@@ -1,6 +1,6 @@
 import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
 import { useMemo, useState } from "react";
-import { cleanObject, subset } from "utils/index";
+import { cleanObject, subset } from "utils";
 
 /**
  * 返回页面url中，指定键的参数值
