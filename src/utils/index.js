@@ -10,11 +10,10 @@ export const isFalsy = (value) => (value === 0 ? false : !value);
  * @param obj
  */
 export const cleanObject = (obj) => {
-  // 由于js中函数参数是引用传递的，所以为了不改变我们传入的对象本身，我们需要做一次拷贝
+  // 由于js中函数参数是引用传递的，所以为了不污染我们传入的对象本身，我们需要做一次拷贝，然后返回处理改过后的新对象。
   const _object = { ...obj };
   Object.keys(_object).forEach((key) => {
-    const value = _object[key];
-    if (isFalsy(value)) {
+    if (isFalsy(_object[key])) {
       delete _object[key];
     }
   });
