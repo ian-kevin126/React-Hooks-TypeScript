@@ -19,21 +19,8 @@ const test = (a: Base) => {};
 const a = { id: 12121, name: "kevin" };
 test(a);
 
-const apiUrl = process.env.REACT_APP_API_URL;
-
 export const LoginScreen = () => {
-  const login = (param: { username: string; password: string }) => {
-    fetch(`${apiUrl}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(param),
-    }).then(async (response) => {
-      if (response.ok) {
-      }
-    });
-  };
+  const login = (param: { username: string; password: string }) => {};
 
   // 这里的FormEvent<HTMLFormElement>是由onSubmit事件指定的参数类型
   // FormEvent<T = Element> 指的是，T如果不指定类型，默认就是Element类型，也就是说，如果我们这里不指定FormEvent为HTMLFormElement类型，
@@ -61,7 +48,7 @@ export const LoginScreen = () => {
         <label htmlFor="password">密码：</label>
         <input type="password" id={"password"} />
       </div>
-      <button type="button">登录</button>
+      <button type="submit">登录</button>
     </form>
   );
 };
