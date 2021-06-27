@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
  * 组件初次加载时执行的useEffect逻辑
  * @param callback
  */
-export const useMount = (callback) => {
+export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
   }, []);
@@ -20,8 +20,8 @@ export const useMount = (callback) => {
  * @param delay
  * @returns {function(...[*]=)}
  */
-const debounce = (func, delay) => {
-  let timer;
+const debounce = (func: () => void, delay?: number) => {
+  let timer: any;
   return () => {
     if (timer) {
       clearTimeout(timer);
@@ -43,7 +43,7 @@ log();
  * @param delay
  * @returns {unknown}
  */
-export const useDebounce = (value, delay) => {
+export const useDebounce = (value: unknown, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
     // 每次value变化的时候就设置一个定时器，delay时间到了之后再改变value值，达到了防抖的作用

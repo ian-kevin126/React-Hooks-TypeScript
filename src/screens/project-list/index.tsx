@@ -5,7 +5,7 @@ import { List } from "./list";
 export const ProjectListScreen = () => {
   const [param, setParam] = useState({
     name: "",
-    personId: ""
+    personId: "",
   });
   const [users, setUsers] = useState([]);
   const [list, setList] = useState([]);
@@ -13,13 +13,15 @@ export const ProjectListScreen = () => {
   useEffect(() => {
     fetch("").then(async (response) => {
       if (response.ok) {
-        setList(response.json());
+        setList(await response.json());
       }
     });
   }, [param]);
 
-  return (<div>
-    <SearchPanel param={param} setParam={setParam} users={users}/>
-    <List list={list}/>
-  </div>)
-}
+  return (
+    <div>
+      <SearchPanel param={param} setParam={setParam} users={users} />
+      <List users={users} list={list} />
+    </div>
+  );
+};
