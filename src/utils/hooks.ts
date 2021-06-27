@@ -32,11 +32,6 @@ const debounce = (func: () => void, delay?: number) => {
   };
 };
 
-const log = debounce(() => console.log("log"), 5000);
-log();
-log();
-log();
-
 /**
  * 参数防抖
  * @param value
@@ -52,4 +47,24 @@ export const useDebounce = <V>(value: V, delay?: number) => {
     return () => clearTimeout(timer);
   }, [value, delay]);
   return debouncedValue;
+};
+
+/**
+ * 处理数组的hook
+ * @param initialArray
+ */
+export const useArray = <T>(initialArray: T[]) => {
+  const [value, setValue] = useState(initialArray);
+
+  return {
+    value,
+    setValue,
+    add: (item: T) => setValue([...value, item]),
+    removeIndex: (index: number) => {
+      const _copy = [...value];
+      _copy.splice(index, 1);
+      setValue(_copy);
+    },
+    clear: () => setValue([]),
+  };
 };
