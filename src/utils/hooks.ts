@@ -43,7 +43,7 @@ log();
  * @param delay
  * @returns {unknown}
  */
-export const useDebounce = (value: unknown, delay?: number) => {
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
     // 每次value变化的时候就设置一个定时器，delay时间到了之后再改变value值，达到了防抖的作用
