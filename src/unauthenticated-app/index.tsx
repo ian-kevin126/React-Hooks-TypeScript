@@ -5,7 +5,7 @@ import { RegisterScreen } from "./register";
 import { LoginScreen } from "./login";
 
 export const UnauthenticatedApp = () => {
-  const [isRegister, setIsRegister] = useState(false);
+  const [isRegister, setIsRegister] = useState(false); // 是否会注册
 
   return (
     <div>
