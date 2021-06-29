@@ -3,23 +3,37 @@ import React from "react";
 import { useAuth } from "./context/auth-context";
 import styled from "@emotion/styled";
 import { Row } from "./components/lib";
+import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
+import { Button, Dropdown, Menu } from "antd";
 
 /**
  * 登录状态的app
  * @constructor
  */
 export const AuthenticatedApp = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   return (
     <Container>
       <Header between={true}>
         <HeaderLeft gap={true}>
-          <h2>logo</h2>
+          <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
           <h2>项目</h2>
           <h2>用户</h2>
         </HeaderLeft>
         <HeaderRight>
-          <button onClick={logout}>退出</button>
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key={"logout"}>
+                  <Button type={"link"} onClick={logout}>
+                    退出
+                  </Button>
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <Button type={"link"}>Hi，{user?.name}</Button>
+          </Dropdown>
         </HeaderRight>
       </Header>
       <Main>
@@ -48,7 +62,9 @@ const Container = styled.div`
 
 // grid-area是用来给grid的子元素取名字的。
 const Header = styled(Row)`
-  justify-content: space-between;
+  padding: 3.2rem;
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.1);
+  z-index: 1;
 `;
 const HeaderLeft = styled(Row)``;
 const HeaderRight = styled.div``;
