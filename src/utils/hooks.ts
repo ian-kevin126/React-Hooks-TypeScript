@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
+    // 这一行是为了解决eslint检测在某些不需要添加依赖的hook中导致控制台产生的warning
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
 
