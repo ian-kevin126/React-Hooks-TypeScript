@@ -1,6 +1,7 @@
 import React, { FormEvent } from "react";
 import { useAuth } from "../context/auth-context";
 import { register } from "../auth-provider";
+import { Button, Form, Input } from "antd";
 
 interface Base {
   id: number;
@@ -40,16 +41,24 @@ export const RegisterScreen = () => {
   };
 
   return (
-    <form onSubmit={handleOnSubmit}>
-      <div>
-        <label htmlFor="username">用户名：</label>
-        <input type="text" id={"username"} />
-      </div>
-      <div>
-        <label htmlFor="password">密码：</label>
-        <input type="password" id={"password"} />
-      </div>
-      <button type="submit">注册</button>
-    </form>
+    <Form onFinish={handleOnSubmit}>
+      <Form.Item
+        name={"username"}
+        rules={[{ required: true, message: "请输入用户名", whitespace: true }]}
+      >
+        <Input placeholder={"请输入用户名"} />
+      </Form.Item>
+      <Form.Item
+        name={"password"}
+        rules={[{ required: true, message: "请输入密码", whitespace: true }]}
+      >
+        <Input placeholder={"请输入密码"} />
+      </Form.Item>
+      <Form.Item>
+        <Button htmlType={"submit"} type="primary">
+          注册
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };

@@ -1,5 +1,6 @@
 import React, { FormEvent } from "react";
 import { useAuth } from "../context/auth-context";
+import { Button, Form, Input } from "antd";
 
 interface Base {
   id: number;
@@ -29,26 +30,34 @@ export const LoginScreen = () => {
   // interface HTMLElement extends Element { }
   // 而 interface FormEvent<T = Element> extends SyntheticEvent<T> {}
   // 所以这里的HTMLFormElement继承了HTMLElement以及Element上的属性
-  const handleOnSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
+  const handleOnSubmit = (values: { username: string; password: string }) => {
+    // evt.preventDefault();
     // as HTMLInputElement就是类型断言，因为evt.currentTarget.elements[0]上没有value属性，
     // 我们就需要强制转成HTMLInputElement类型，才能取到value值。
-    const username = (evt.currentTarget.elements[0] as HTMLInputElement).value;
-    const password = (evt.currentTarget.elements[1] as HTMLInputElement).value;
-    login({ username, password });
+    // const username = (evt.currentTarget.elements[0] as HTMLInputElement).value;
+    // const password = (evt.currentTarget.elements[1] as HTMLInputElement).value;
+    login(values);
   };
 
   return (
-    <form onSubmit={handleOnSubmit}>
-      <div>
-        <label htmlFor="username">用户名：</label>
-        <input type="text" id={"username"} />
-      </div>
-      <div>
-        <label htmlFor="password">密码：</label>
-        <input type="password" id={"password"} />
-      </div>
-      <button type="submit">登录</button>
-    </form>
+    <Form onFinish={handleOnSubmit}>
+      <Form.Item
+        name={"username"}
+        rules={[{ required: true, message: "请输入用户名", whitespace: true }]}
+      >
+        <Input placeholder={"请输入用户名"} />
+      </Form.Item>
+      <Form.Item
+        name={"password"}
+        rules={[{ required: true, message: "请输入密码", whitespace: true }]}
+      >
+        <Input placeholder={"请输入密码"} />
+      </Form.Item>
+      <Form.Item>
+        <Button htmlType={"submit"} type="primary">
+          登录
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
