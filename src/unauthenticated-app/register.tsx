@@ -1,7 +1,7 @@
 import React, { FormEvent } from "react";
 import { useAuth } from "../context/auth-context";
-import { register } from "../auth-provider";
-import { Button, Form, Input } from "antd";
+import { Form, Input } from "antd";
+import { LongButton } from "./index";
 
 interface Base {
   id: number;
@@ -23,7 +23,7 @@ const a = { id: 12121, name: "kevin" };
 test(a);
 
 export const RegisterScreen = () => {
-  const { register, user } = useAuth();
+  const { register } = useAuth();
   // 这里的FormEvent<HTMLFormElement>是由onSubmit事件指定的参数类型
   // FormEvent<T = Element> 指的是，T如果不指定类型，默认就是Element类型，也就是说，如果我们这里不指定FormEvent为HTMLFormElement类型，
   // 那么FormEvent就默认是Element类型。
@@ -55,9 +55,9 @@ export const RegisterScreen = () => {
         <Input placeholder={"请输入密码"} />
       </Form.Item>
       <Form.Item>
-        <Button htmlType={"submit"} type="primary">
+        <LongButton htmlType={"submit"} type="primary">
           注册
-        </Button>
+        </LongButton>
       </Form.Item>
     </Form>
   );
