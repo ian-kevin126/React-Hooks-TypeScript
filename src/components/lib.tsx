@@ -1,4 +1,7 @@
 import styled from "@emotion/styled";
+import { Spin, Typography } from "antd";
+import React from "react";
+import { DevTools } from "jira-dev-tool/dist";
 
 /**
  * 通用的flex组件
@@ -26,3 +29,23 @@ export const Row = styled.div<{
         : undefined};
   }
 `;
+
+const FullPage = styled.div`
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const FullPageLoading = () => (
+  <FullPage>
+    <Spin />
+  </FullPage>
+);
+
+export const FullPageErrorFallback = ({ error }: { error: Error | null }) => (
+  <FullPage>
+    <DevTools />
+    <Typography.Text type={"danger"}>{error?.message}</Typography.Text>
+  </FullPage>
+);

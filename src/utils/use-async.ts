@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 interface State<D> {
-  error: null | Error;
+  error: Error | null;
   data: D | null;
   stat: "idle" | "loading" | "error" | "success";
 }
@@ -44,9 +44,9 @@ export const useAsync = <D>(
   // 发生错误时
   const setError = (error: Error) =>
     setState({
-      data: null,
-      stat: "success",
       error,
+      stat: "error",
+      data: null,
     });
 
   // run用来触发异步请求
