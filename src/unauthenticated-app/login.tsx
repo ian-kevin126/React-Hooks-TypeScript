@@ -2,6 +2,7 @@ import React from "react";
 import { useAuth } from "../context/auth-context";
 import { Form, Input } from "antd";
 import { LongButton } from "unauthenticated-app";
+import { useAsync } from "../utils/use-async";
 
 interface Base {
   id: number;
@@ -22,8 +23,13 @@ const test = (a: Base) => {};
 const a = { id: 12121, name: "kevin" };
 test(a);
 
-export const LoginScreen = () => {
+export const LoginScreen = ({
+  onError,
+}: {
+  onError: (error: Error) => void;
+}) => {
   const { login, user } = useAuth();
+  const { isLoading, run } = useAsync(undefined, { throwOnError: true });
   // 这里的FormEvent<HTMLFormElement>是由onSubmit事件指定的参数类型
   // FormEvent<T = Element> 指的是，T如果不指定类型，默认就是Element类型，也就是说，如果我们这里不指定FormEvent为HTMLFormElement类型，
   // 那么FormEvent就默认是Element类型。
@@ -31,13 +37,29 @@ export const LoginScreen = () => {
   // interface HTMLElement extends Element { }
   // 而 interface FormEvent<T = Element> extends SyntheticEvent<T> {}
   // 所以这里的HTMLFormElement继承了HTMLElement以及Element上的属性
-  const handleOnSubmit = (values: { username: string; password: string }) => {
+  const handleOnSubmit = async (values: {
+    username: string;
+    password: string;
+  }) => {
     // evt.preventDefault();
     // as HTMLInputElement就是类型断言，因为evt.currentTarget.elements[0]上没有value属性，
     // 我们就需要强制转成HTMLInputElement类型，才能取到value值。
     // const username = (evt.currentTarget.elements[0] as HTMLInputElement).value;
     // const password = (evt.currentTarget.elements[1] as HTMLInputElement).value;
-    login(values);
+
+    // login(values);
+
+    try {
+      await run(login(values));
+      // register(values).catch(e => onError(e));
+    } catch (e) {
+      onError(e);
+    }
+
+    // 也可以这样写
+    // try {
+    //   register(values).catch(e => onError(e));
+    // }
   };
 
   return (
@@ -55,7 +77,7 @@ export const LoginScreen = () => {
         <Input placeholder={"请输入密码"} />
       </Form.Item>
       <Form.Item>
-        <LongButton htmlType={"submit"} type="primary">
+        <LongButton loading={isLoading} htmlType={"submit"} type="primary">
           登录
         </LongButton>
       </Form.Item>
