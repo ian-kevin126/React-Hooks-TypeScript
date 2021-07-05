@@ -91,7 +91,14 @@ export const useArray = <T>(initialArray: T[]) => {
   };
 };
 
+/**
+ * 网页title的 hooks
+ * @param title
+ * @param keepOnUnmount：页面卸载时保留住旧的标题
+ */
 export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
+  // useRef 返回一个可变的 ref 对象，其 .current 属性被初始化为传入的参数（initialValue）。返回的 ref 对象在组件的整个生命周期内保持不变。
+  // 用useRef保存这个title值，只要我们不手动去更新它，那他在组件的整个生命周期都是不会变的。
   const oldTitle = useRef(document.title).current;
   // 页面加载时: 旧title
   // 加载后：新title
@@ -103,7 +110,7 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
   useEffect(() => {
     return () => {
       if (!keepOnUnmount) {
-        // 如果不指定依赖，读到的就是旧title
+        // 如果不指定依赖，读到的就是旧title，这就是闭包的影响
         document.title = oldTitle;
       }
     };
@@ -120,7 +127,7 @@ export const resetRoute = () => (window.location.href = window.location.origin);
 export const subset = <
   O extends { [key in string]: unknown },
   K extends keyof O
-  >(
+>(
   obj: O,
   keys: K[]
 ) => {
