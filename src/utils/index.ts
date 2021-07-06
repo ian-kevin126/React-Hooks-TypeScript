@@ -117,6 +117,7 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
   }, [keepOnUnmount, oldTitle]);
 };
 
+// 不仅重置路由状态，还能刷新整个页面。
 export const resetRoute = () => (window.location.href = window.location.origin);
 
 /**
