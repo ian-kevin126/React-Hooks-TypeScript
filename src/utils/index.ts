@@ -145,8 +145,10 @@ export const useMountedRef = () => {
   const mountedRef = useRef(false);
 
   useEffect(() => {
+    // 页面呗加载完了之后就将mountedRef置为true
     mountedRef.current = true;
     return () => {
+      // 页面卸载之后，就置为false
       mountedRef.current = false;
     };
   });
