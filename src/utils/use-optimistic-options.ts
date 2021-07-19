@@ -10,13 +10,17 @@ export const useConfig = (
   return {
     onSuccess: () => queryClient.invalidateQueries(queryKey),
     async onMutate(target: any) {
+      // 获取本地缓存数据
       const previousItems = queryClient.getQueryData(queryKey);
+      // 往缓存里刷数据
       queryClient.setQueryData(queryKey, (old?: any[]) => {
         return callback(target, old);
       });
       return { previousItems };
     },
+    // 回滚机制，我们在onMutate里返回的就是context，如果更新不成功，就回滚到原来的状态
     onError(error: any, newItem: any, context: any) {
+      // queryClient.setQueryData(queryKey, (context as {previousItems: Project[]}).previousItems);
       queryClient.setQueryData(queryKey, context.previousItems);
     },
   };
@@ -27,6 +31,7 @@ export const useDeleteConfig = (queryKey: QueryKey) =>
     queryKey,
     (target, old) => old?.filter((item) => item.id !== target.id) || []
   );
+
 export const useEditConfig = (queryKey: QueryKey) =>
   useConfig(
     queryKey,
@@ -35,6 +40,7 @@ export const useEditConfig = (queryKey: QueryKey) =>
         item.id === target.id ? { ...item, ...target } : item
       ) || []
   );
+
 export const useAddConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => (old ? [...old, target] : []));
 

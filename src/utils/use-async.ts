@@ -19,6 +19,7 @@ const defaultConfig = {
   throwOnError: false,
 };
 
+// 再将useMountRef和dispatch抽象出来
 const useSafeDispatch = <T>(dispatch: (...args: T[]) => void) => {
   const mountedRef = useMountedRef();
   return useCallback(
