@@ -29,9 +29,9 @@ export const http = async (
     method: "GET",
     headers: {
       Authorization: token ? `Bearer ${token}` : "",
-      "Content-Type": data ? "application/json" : ""
+      "Content-Type": data ? "application/json" : "",
     },
-    ...customConfig
+    ...customConfig,
   };
 
   if (config.method.toUpperCase() === "GET") {
@@ -50,8 +50,11 @@ export const http = async (
         await auth.logout();
         // 退出之后，再重新刷新页面，重新登录
         window.location.reload();
+        // 由于fetch API在客户端或者服务端返回错误的时候不会抛出异常，所以，我们需要手动返回Promise的reject处理逻辑
+        // 如果我们使用axios这个库来作为api请求的话，是可以捕捉到异常的，这是axios和fetch的区别
         return Promise.reject({ message: "请重新登录" });
       }
+
       const data = await response.json();
       if (response.ok) {
         // 成功之后，返回数据
@@ -76,6 +79,7 @@ export const http = async (
 export const useHttp = () => {
   const { user } = useAuth();
   // utility type 的用法：用泛型给它传入一个其他类型，然后utility type对这个类型进行某种操作
+  // Parameters的作用就是将参数提取成tuple（也就是长度和类型固定的数组[]），所以，我们需要用扩展运算符进行解构
   return useCallback(
     (...[endpoint, config]: Parameters<typeof http>) =>
       http(endpoint, { ...config, token: user?.token }),
@@ -110,11 +114,24 @@ type Person = {
   name: string;
   age: number;
 };
-const xiaoMing: Partial<Person> = {};
+
+// Partial：只取Person的部分类型
+const person: Partial<Person> = {};
+
+// Omit：删除第二个参数中的类型，把name和age都删掉
 const shenMiRen: Omit<Person, "name" | "age"> = {};
-type PersonKeys = keyof Person;
+
+// keyof：取出Person的键组成的类型
+type PersonKeys = keyof Person; // "name" | "age"
+
+const p: PersonKeys = "name";
+
+// Pick：从Person中取出name和age的类型
 type PersonOnlyName = Pick<Person, "name" | "age">;
+
+// Exclude：取出PersonKeys中除了name之外的其他的类型
 type Age = Exclude<PersonKeys, "name">;
+const _age: Age = "age";
 
 // Partial 的实现
 type Partial<T> = {

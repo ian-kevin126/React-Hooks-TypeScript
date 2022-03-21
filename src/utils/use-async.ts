@@ -1,5 +1,5 @@
 import { useCallback, useReducer, useState } from "react";
-import { useMountedRef } from "utils/index";
+import { useMountedRef } from "utils";
 
 interface State<D> {
   error: Error | null;
@@ -15,13 +15,12 @@ const defaultInitialState: State<null> = {
 };
 
 // 配置抛出异常的方式，默认抛出和默认不抛出
-const defaultConfig = {
-  throwOnError: false,
-};
+const defaultConfig = { throwOnError: false };
 
 // 再将useMountRef和dispatch抽象出来
 const useSafeDispatch = <T>(dispatch: (...args: T[]) => void) => {
   const mountedRef = useMountedRef();
+
   return useCallback(
     (...args: T[]) => (mountedRef.current ? dispatch(...args) : void 0),
     [dispatch, mountedRef]
@@ -71,12 +70,15 @@ export const useAsync = <D>(
       if (!promise || !promise.then) {
         throw new Error("请传入 Promise 类型数据");
       }
+
       setRetry(() => () => {
         if (runConfig?.retry) {
           run(runConfig?.retry(), runConfig);
         }
       });
+
       safeDispatch({ stat: "loading" });
+
       return promise
         .then((data) => {
           setData(data);
