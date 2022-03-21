@@ -21,6 +21,7 @@ const bootstrapUser = async () => {
     const data = await http("me", { token });
     user = data.user;
   }
+
   return user;
 };
 
@@ -34,6 +35,7 @@ const AuthContext =
       }
     | undefined
   >(undefined);
+
 AuthContext.displayName = "AuthContext";
 
 // 登录鉴权的Provider
@@ -47,6 +49,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     run,
     setData: setUser,
   } = useAsync<User | null>();
+
   const queryClient = useQueryClient();
 
   // 函数式编程的point free ——> (user) => setUser(user)  等价于  setUser
