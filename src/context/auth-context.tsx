@@ -47,6 +47,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     run,
     setData: setUser,
   } = useAsync<User | null>();
+
   const queryClient = useQueryClient();
 
   // 函数式编程的point free ——> (user) => setUser(user)  等价于  setUser
