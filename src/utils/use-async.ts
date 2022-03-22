@@ -27,6 +27,11 @@ const useSafeDispatch = <T>(dispatch: (...args: T[]) => void) => {
   );
 };
 
+/**
+ * 用自定义的Hooks来处理异步操作的状态控制，提升用户体验
+ * @param initialState
+ * @param initialConfig
+ */
 export const useAsync = <D>(
   initialState?: State<D>,
   initialConfig?: typeof defaultConfig
@@ -72,6 +77,8 @@ export const useAsync = <D>(
         throw new Error("请传入 Promise 类型数据");
       }
 
+      console.log("promise: ", promise);
+
       setRetry(() => () => {
         if (runConfig?.retry) {
           run(runConfig?.retry(), runConfig);
@@ -82,12 +89,16 @@ export const useAsync = <D>(
 
       return promise
         .then((data) => {
+          console.log("data: ", data);
+
           setData(data);
           return data;
         })
         .catch((error) => {
           // catch会消化异常，如果不主动抛出，外面是接收不到异常的
           setError(error);
+
+          // 如果我们配置了抛出异常，就会抛出异常这种方式，否则直接返回error。
           if (config.throwOnError) return Promise.reject(error);
           return error;
         });

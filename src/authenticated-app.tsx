@@ -25,6 +25,7 @@ export default function AuthenticatedApp() {
         <Routes>
           <Route path={"/projects"} element={<ProjectListScreen />} />
           <Route path={"/projects/:projectId/*"} element={<ProjectScreen />} />
+          {/*如果前两个路由都没有匹配到，就默认打开第一个*/}
           <Navigate to={"/projects"} />
         </Routes>
       </Main>
