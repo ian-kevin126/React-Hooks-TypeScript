@@ -21,12 +21,14 @@ export const cleanObject = (object?: { [key: string]: unknown }) => {
     return {};
   }
   const result = { ...object };
+
   Object.keys(result).forEach((key) => {
     const value = result[key];
     if (isVoid(value)) {
       delete result[key];
     }
   });
+
   return result;
 };
 
