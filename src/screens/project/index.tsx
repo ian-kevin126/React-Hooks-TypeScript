@@ -18,6 +18,7 @@ export const ProjectScreen = () => {
       <Aside>
         <Menu mode={"inline"} selectedKeys={[routeType]}>
           <Menu.Item key={"kanban"}>
+            {/*这里要注意，to={"/kanban"} 如果在路有钱加反斜杠，会被认为是跟路由下面的看板*/}
             <Link to={"kanban"}>看板</Link>
           </Menu.Item>
           <Menu.Item key={"epic"}>
@@ -27,9 +28,9 @@ export const ProjectScreen = () => {
       </Aside>
       <Main>
         <Routes>
-          {/*projects/:projectId/kanban*/}
+          {/*看板：projects/:projectId/kanban*/}
           <Route path={"/kanban"} element={<KanbanScreen />} />
-          {/*projects/:projectId/epic*/}
+          {/*任务组：projects/:projectId/epic*/}
           <Route path={"/epic"} element={<EpicScreen />} />
           {/* 如果上面的两个都匹配不到，就跳转到下面这个默认路由 */}
           <Navigate to={window.location.pathname + "/kanban"} replace={true} />

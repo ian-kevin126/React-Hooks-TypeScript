@@ -21,12 +21,14 @@ export const cleanObject = (object?: { [key: string]: unknown }) => {
     return {};
   }
   const result = { ...object };
+
   Object.keys(result).forEach((key) => {
     const value = result[key];
     if (isVoid(value)) {
       delete result[key];
     }
   });
+
   return result;
 };
 
@@ -94,7 +96,7 @@ export const useArray = <T>(initialArray: T[]) => {
 /**
  * 网页title的 hooks
  * @param title
- * @param keepOnUnmount：页面卸载时保留住旧的标题
+ * @param keepOnUnmount：页面卸载时保留住旧的标题，默认为true
  */
 export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
   // useRef 返回一个可变的 ref 对象，其 .current 属性被初始化为传入的参数（initialValue）。返回的 ref 对象在组件的整个生命周期内保持不变。

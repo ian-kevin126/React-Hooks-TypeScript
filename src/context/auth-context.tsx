@@ -21,6 +21,7 @@ const bootstrapUser = async () => {
     const data = await http("me", { token });
     user = data.user;
   }
+
   return user;
 };
 
@@ -34,6 +35,7 @@ const AuthContext =
       }
     | undefined
   >(undefined);
+
 AuthContext.displayName = "AuthContext";
 
 // 登录鉴权的Provider

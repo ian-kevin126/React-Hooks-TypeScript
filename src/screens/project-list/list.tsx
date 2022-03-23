@@ -21,6 +21,7 @@ interface ListProps extends TableProps<Project> {
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject(useProjectsQueryKey());
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
+
   return (
     <Table
       rowKey={"id"}
@@ -86,6 +87,7 @@ const More = ({ project }: { project: Project }) => {
   const { startEdit } = useProjectModal();
   const editProject = (id: number) => () => startEdit(id);
   const { mutate: deleteProject } = useDeleteProject(useProjectsQueryKey());
+
   const confirmDeleteProject = (id: number) => {
     Modal.confirm({
       title: "确定删除这个项目吗?",
@@ -96,6 +98,7 @@ const More = ({ project }: { project: Project }) => {
       },
     });
   };
+
   return (
     <Dropdown
       overlay={
